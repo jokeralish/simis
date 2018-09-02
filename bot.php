@@ -35,30 +35,41 @@ if (count($pesan_datang) > 2) {
         $options .= $pesan_datang[$i];
     }
 }
-
 #-------------------------[Function]-------------------------#
-function shalat($keyword) {
-    $uri = "https://time.siswadi.com/pray/" . $keyword;
-
-    $response = Unirest\Request::get("$uri");
-
-    $json = json_decode($response->raw_body, true);
-    $result = "Jadwal Shalat Sekitar ";
-	$result .= $json['location']['address'];
-	$result .= "\nTanggal : ";
-	$result .= $json['time']['date'];
-	$result .= "\n\nShubuh : ";
-	$result .= $json['data']['Fajr'];
-	$result .= "\nDzuhur : ";
-	$result .= $json['data']['Dhuhr'];
-	$result .= "\nAshar : ";
-	$result .= $json['data']['Asr'];
-	$result .= "\nMaghrib : ";
-	$result .= $json['data']['Maghrib'];
-	$result .= "\nIsya : ";
-	$result .= $json['data']['Isha'];
-    return $result;
+function lirik($keyword) { 
+    $uri = "http://ide.fdlrcn.com/workspace/yumi-apis/joox?songname=" . $keyword . ""; 
+ 
+    $response = Unirest\Request::get("$uri"); 
+ 
+    $json = json_decode($response->raw_body, true); 
+    $result = "====[Lyrics]====";
+    $result .= "\nJudul : ";
+    $result .= $json['0']['0'];
+    $result .= "\nLyrics :\n";
+    $result .= $json['0']['5'];
+    $result .= "\n\nPencarian : Google";
+    $result .= "\n====[Lyrics]====";
+    return $result; 
 }
+#-------------------------[Function]-------------------------#
+function music($keyword) { 
+    $uri = "http://ide.fdlrcn.com/workspace/yumi-apis/joox?songname=" . $keyword . ""; 
+ 
+    $response = Unirest\Request::get("$uri"); 
+ 
+    $json = json_decode($response->raw_body, true); 
+    $result = "====[Music]====";
+    $result .= "\nJudul : ";
+    $result .= $json['0']['0'];
+    $result .= "\nDurasi : ";
+    $result .= $json['0']['1'];
+    $result .= "\nLink : ";
+    $result .= $json['0']['4'];
+    $result .= "\n\nPencarian : Google";
+    $result .= "\n====[Music]====";
+    return $result; 
+}
+#-------------------------[Function]-------------------------#
 #-------------------------[Function]-------------------------#
 
 # require_once('./src/function/search-1.php');
@@ -68,8 +79,8 @@ function shalat($keyword) {
 # require_once('./src/function/hard.php');
 
 //show menu, saat join dan command /menu
-if ($type == 'join' || $command == '/menu') {
-    $text = "Assalamualaikum Kakak, aku adalah bot jadwal shalat, silahkan ketik\n\n/shalat <nama tempat>\n\nnanti aku bakalan kasih tahu jam berapa waktunya shalat ^_^";
+if ($type == 'join' || $command == '/salam') {
+    $text = "Assalamualaikum Kakak";
     $balas = array(
         'replyToken' => $replyToken,
         'messages' => array(
@@ -83,9 +94,29 @@ if ($type == 'join' || $command == '/menu') {
 
 //pesan bergambar
 if($message['type']=='text') {
-	    if ($command == '/shalat') {
+	    if ($command == '/youtube') {
+        $keyword = '';
+        $image = 'https://img.youtube.com/vi/' . $keyword . '/2.jpg';
+        $balas = array(
+            'replyToken' => $replyToken,
+            'messages' => array(
+                array(
+                    'type' => 'image',
+                    'originalContentUrl' => $image,
+                    'previewImageUrl' => $image
+                ), array(
+                    'type' => 'video',
+                    'originalContentUrl' => vid_search($keyword),
+                    'previewImageUrl' => $image
+                )
+            )
+        );
+    }
+}
+if($message['type']=='text') {
+	    if ($command == '/lirik') {
 
-        $result = shalat($options);
+        $result = lirik($options);
         $balas = array(
             'replyToken' => $replyToken,
             'messages' => array(
@@ -96,21 +127,80 @@ if($message['type']=='text') {
             )
         );
     }
+}
+if($message['type']=='text') {
+	    if ($command == '/music') {
 
-}else if($message['type']=='sticker')
-{	
-	$balas = array(
-							'replyToken' => $replyToken,														
+        $result = music($options);
+        $balas = array(
+            'replyToken' => $replyToken,
+            'messages' => array(
+                array(
+                    'type' => 'text',
+                    'text' => $result
+                )
+            )
+        );
+    }
+}
+else
+$pesan=str_replace(" ", "%20", $pesan_datang);
+$key = 'f1830f11-af68-49ef-bbc8-c4308cbf4d20'; //API SimSimi
+$url = 'http://sandbox.api.simsimi.com/request.p?key='.$key.'&lc=id&ft=1.0&text='.$pesan;
+$json_data = file_get_contents($url);
+$url=json_decode($json_data,1);
+$diterima = $url['response'];
+if($message['type']=='text')
+{
+if($url['result'] == 404)
+	{
+		$balas = array(
+							'UserID' => $profil->userId,	
+                                                        'replyToken' => $replyToken,													
 							'messages' => array(
 								array(
-										'type' => 'text',									
-										'text' => 'Makasih Kak Stikernya ^_^'										
-									
+										'type' => 'text',					
+										'text' => 'Mohon Gunakan Bahasa Indonesia Yang Benar :D.'
+									)
+							)
+						);
+				
+	}
+else
+if($url['result'] != 100)
+	{
+		
+		
+		$balas = array(
+							'UserID' => $profil->userId,
+                                                        'replyToken' => $replyToken,														
+							'messages' => array(
+								array(
+										'type' => 'text',					
+										'text' => 'Maaf '.$profil->displayName.' Server Kami Sedang Sibuk Sekarang.'
+									)
+							)
+						);
+				
+	}
+	else{
+		$balas = array(
+							'UserID' => $profil->userId,
+                                                        'replyToken' => $replyToken,														
+							'messages' => array(
+								array(
+										'type' => 'text',					
+										'text' => ''.$diterima.''
 									)
 							)
 						);
 						
+	}
 }
+ 
+$result =  json_encode($balas);
+file_put_contents('./reply.json',$result);
+$client->replyMessage($balas);
 if (isset($balas)) {
     $result = json_encode($balas);
 //$result = ob_get_clean();
