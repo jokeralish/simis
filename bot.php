@@ -200,13 +200,4 @@ if($url['result'] != 100)
 $result =  json_encode($balas);
 file_put_contents('./reply.json',$result);
 $client->replyMessage($balas);
-if (isset($balas)) {
-    $result = json_encode($balas);
-//$result = ob_get_clean();
-
-    file_put_contents('./balasan.json', $result);
-
-
-    $client->replyMessage($balas);
-}
 ?>
