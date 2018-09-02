@@ -5,7 +5,7 @@ Modified by Ilyasa
 2017
 */
 require_once('./line_class.php');
-
+require_once('./unirest-php-master/src/Unirest.php');
 $channelAccessToken = 'YOUR-CHANNEL-ACCESS-TOKEN'; //Your Channel Access Token
 $channelSecret = 'YOUR-CHANNEL-SECRET';//Your Channel Secret
 $client = new LINEBotTiny($channelAccessToken, $channelSecret);
