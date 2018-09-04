@@ -15,45 +15,6 @@ $replyToken = $client->parseEvents()[0]['replyToken'];
 $message 	= $client->parseEvents()[0]['message'];
 $profil = $client->profil($userId);
 $pesan_datang = $message['text'];
-if ($type == 'join') {
-    $text = "Makasih dh invite aku ke grup";
-    $balas = array(
-        'replyToken' => $replyToken,
-        'messages' => array(
-            array(
-                {
-  "type": "template",
-  "altText": "this is a buttons template",
-  "template": {
-    "type": "buttons",
-    "actions": [
-      {
-        "type": "message",
-        "label": "halo",
-        "text": "halo"
-      },
-      {
-        "type": "message",
-        "label": "apa",
-        "text": "apa"
-      },
-      {
-        "type": "message",
-        "label": "iya",
-        "text": "iya"
-      },
-      {
-        "type": "message",
-        "label": "aku",
-        "text": "aku"
-      }
-    ],
-    "thumbnailImageUrl": "https://2.bp.blogspot.com/-EMlQ3W8S3a8/WN_anZgsvmI/AAAAAAAOWEo/UHPk_0VTQUcxpa6N-DZuDSj-gonRFP6SgCLcB/s1600/AW401668_01.gif",
-    "title": "kontol",
-    "text": "andri"
-  }
-		}
-}
 if($message['type']=='contact')
 {	
 	$balas = array(
