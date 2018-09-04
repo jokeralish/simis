@@ -21,11 +21,37 @@ if ($type == 'join') {
         'replyToken' => $replyToken,
         'messages' => array(
             array(
-                'type' => 'text',
-                'text' => $text
-            )
-        )
-    );
+                {
+  "type": "template",
+  "altText": "this is a buttons template",
+  "template": {
+    "type": "buttons",
+    "actions": [
+      {
+        "type": "message",
+        "label": "halo",
+        "text": "halo"
+      },
+      {
+        "type": "message",
+        "label": "apa",
+        "text": "apa"
+      },
+      {
+        "type": "message",
+        "label": "iya",
+        "text": "iya"
+      },
+      {
+        "type": "message",
+        "label": "aku",
+        "text": "aku"
+      }
+    ],
+    "thumbnailImageUrl": "https://2.bp.blogspot.com/-EMlQ3W8S3a8/WN_anZgsvmI/AAAAAAAOWEo/UHPk_0VTQUcxpa6N-DZuDSj-gonRFP6SgCLcB/s1600/AW401668_01.gif",
+    "title": "kontol",
+    "text": "andri"
+  }
 }
 if($message['type']=='contact')
 {	
