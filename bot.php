@@ -52,6 +52,7 @@ if ($type == 'join') {
     "title": "kontol",
     "text": "andri"
   }
+		}
 }
 if($message['type']=='contact')
 {	
