@@ -1,6 +1,7 @@
 # SHIMISHIMI
 ![Prankbots](Screenshot_2018-09-05-04-59-51-98.png)
 # ADD CONTOH YANG SUDAH JADI
+![Prankbos](download.png)
 <a href="https://line.me/R/ti/p/%40lsf1961w"><img height="36" border="0" alt="ADD CONTACT" src="https://scdn.line-apps.com/n/line_add_friends/btn/zh-Hant.png"></a>
 
 
