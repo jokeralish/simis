@@ -15,22 +15,6 @@ $replyToken = $client->parseEvents()[0]['replyToken'];
 $message 	= $client->parseEvents()[0]['message'];
 $profil = $client->profil($userId);
 $pesan_datang = $message['text'];
-if($message['type']=='contact')
-{	
-	$balas = array(
-							'UserID' => $profil->userId,	
-                                                        'replyToken' => $replyToken,							
-							'messages' => array(
-								array(
-										'type' => 'text',									
-										'text' => 'siapa itu'										
-									
-									)
-							)
-						);
-						
-}
-else
 $pesan=str_replace(" ", "%20", $pesan_datang);
 $key = 'f1830f11-af68-49ef-bbc8-c4308cbf4d20'; //API SimSimi
 $url = 'http://sandbox.api.simsimi.com/request.p?key='.$key.'&lc=id&ft=1.0&text='.$pesan;
@@ -49,7 +33,7 @@ if($url['result'] != 100)
 							'messages' => array(
 								array(
 										'type' => 'text',					
-										'text' => 'Maaf '.$profil->displayName.' lagi puasa chat.'
+										'text' => ''
 									)
 							)
 						);
